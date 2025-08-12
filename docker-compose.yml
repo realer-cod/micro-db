@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # PostgreSQL база данных
+  database:
+    image: postgres:16-alpine
+    container_name: proxy_stats_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-proxy_stats}
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secret123}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin} -d ${POSTGRES_DB:-proxy_stats}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # FastAPI приложение
+  api:
+    build: .
+    container_name: proxy_stats_api
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-secret123}@database:5432/${POSTGRES_DB:-proxy_stats}
+    volumes:
+      - ./app:/app/app
+      - ./logs:/app/logs
+    ports:
+      - "8000:8000"
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
