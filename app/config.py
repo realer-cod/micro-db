@@ -1,10 +1,14 @@
 from pydantic_settings import BaseSettings
 from typing import Optional
 
-
 class Settings(BaseSettings):
-    # Database
+    # Database connection
     database_url: str = "postgresql+asyncpg://admin:secret123@localhost:5432/proxy_stats"
+    
+    # PostgreSQL settings (для Docker Compose)
+    postgres_db: str = "proxy_stats"
+    postgres_user: str = "admin" 
+    postgres_password: str = "secret123"
     
     # API
     secret_key: str = "your-secret-key-change-in-production"
@@ -16,6 +20,5 @@ class Settings(BaseSettings):
     
     class Config:
         env_file = ".env"
-
 
 settings = Settings()

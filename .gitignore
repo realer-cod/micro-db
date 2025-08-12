@@ -38,3 +38,5 @@ alembic/versions/*.py
 
 # Backup files
 backups/
+
+разное.txt

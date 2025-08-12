@@ -18,7 +18,7 @@ class EarningCreate(BaseModel):
     event_timestamp: Optional[datetime] = Field(None, description="Время события")
     success: bool = Field(True, description="Успешность операции")
     error_message: Optional[str] = Field(None, description="Сообщение об ошибке")
-    metadata: Optional[str] = Field(None, description="Дополнительные данные (JSON)")
+    extra_data: Optional[str] = Field(None, description="Дополнительные данные (JSON)")
 
     @validator('bot_name')  # ✅ НОВОЕ: Валидация названия бота
     def validate_bot_name(cls, v):

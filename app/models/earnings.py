@@ -2,22 +2,21 @@ from sqlalchemy import Column, Integer, String, Numeric, DateTime, Text, Boolean
 from sqlalchemy.sql import func
 from app.database import Base
 
-
 class ProxyEarning(Base):
     """Модель для записи заработка через прокси"""
     __tablename__ = "proxy_earnings"
-
+    
     id = Column(Integer, primary_key=True, index=True)
     
     # Информация о прокси
     proxy_ip = Column(String(45), nullable=False, index=True)
     proxy_port = Column(Integer, nullable=False)
-    proxy_key = Column(String(100), nullable=False, index=True)  # ip:port
+    proxy_key = Column(String(100), nullable=False, index=True)
     
     # Информация о сервере и боте
     server_id = Column(String(50), nullable=False, index=True)
     bot_id = Column(String(50), nullable=False)
-    bot_name = Column(String(100), nullable=False, index=True)  # ✅ НОВОЕ: Название бота
+    bot_name = Column(String(100), nullable=False, index=True)
     
     # Информация о заработке
     faucet_name = Column(String(100), nullable=False)
@@ -36,8 +35,8 @@ class ProxyEarning(Base):
     event_timestamp = Column(DateTime, nullable=False)
     created_at = Column(DateTime, default=func.now(), nullable=False)
     
-    # Дополнительные данные
-    metadata = Column(Text, nullable=True)
-
+    # Дополнительные данные (ИСПРАВЛЕНО)
+    extra_data = Column(Text, nullable=True)
+    
     def __repr__(self):
         return f"<ProxyEarning(bot={self.bot_name}, proxy={self.proxy_key}, amount={self.reward_amount} {self.reward_currency})>"
