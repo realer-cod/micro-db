@@ -1,41 +1,43 @@
 version: '3.8'
 
 services:
-  # PostgreSQL база данных
-  database:
+  # Сервис базы данных (остается почти без изменений)
+  postgres:
     image: postgres:16-alpine
     container_name: proxy_stats_db
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-proxy_stats}
-      POSTGRES_USER: ${POSTGRES_USER:-admin}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secret123}
+    env_file:
+      - .env.db
+    ports:
+      - "5432:5432" # Пробрасываем порт для удобства подключения к БД с хоста (например, через DBeaver)
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
-    ports:
-      - "5432:5432"
+    restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin} -d ${POSTGRES_DB:-proxy_stats}"]
-      interval: 10s
+      test: ["CMD-SHELL", "pg_isready -U admin -d proxy_stats"]
+      interval: 5s
       timeout: 5s
       retries: 5
-    restart: unless-stopped
 
-  # FastAPI приложение
-  api:
-    build: .
+  # НОВЫЙ СЕРВИС для нашего FastAPI приложения
+  fastapi:
+    build: . # Указывает Docker Compose собрать образ из Dockerfile в текущей директории
     container_name: proxy_stats_api
+    env_file:
+      - .env # Передаем наши переменные окружения в контейнер
     environment:
-      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-secret123}@database:5432/${POSTGRES_DB:-proxy_stats}
+      - PYTHONPATH=/app
+    ports:
+      - "8008:8008" # Пробрасываем порт приложения на наш локальный компьютер
     volumes:
       - ./app:/app/app
-      - ./logs:/app/logs
-    ports:
-      - "8000:8000"
+      - ./alembic:/app/alembic
+      - ./alembic.ini:/app/alembic.ini 
+      
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8008 --reload # Команда для запуска с автоперезагрузкой
     depends_on:
-      database:
-        condition: service_healthy
-    restart: unless-stopped
+      postgres:
+        condition: service_healthy # Запустит FastAPI только после того, как postgres пройдет healthcheck
 
 volumes:
   postgres_data:
+    name: global_bd_postgres_volume

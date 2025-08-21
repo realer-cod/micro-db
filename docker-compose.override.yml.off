@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  fastapi:
+    # Открываем порт для отладчика
+    volumes:
+      - .:/app
+    ports:
+      - "5678:5678"
+    # Переопределяем команду запуска, чтобы включить сервер отладки
+    command: python -m debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn app.main:app --host 0.0.0.0 --port 8008 --reload

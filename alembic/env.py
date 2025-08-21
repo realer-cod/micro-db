@@ -10,7 +10,7 @@ from app.database import Base
 from app.config import settings
 
 # Важно! Импортируйте все ваши модели, чтобы Alembic их видел
-from app.models import earnings
+from app.models import earnings, currency
 
 # this is the Alembic Config object
 config = context.config

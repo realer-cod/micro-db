@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Docker: Python - FastAPI",
+            "type": "python", // <-- ИЗМЕНЕНИЕ: тип теперь "python"
+            "request": "launch",
+            "module": "uvicorn", // <-- ИЗМЕНЕНИЕ: мы запускаем uvicorn
+            "args": [
+                "app.main:app",
+                "--host",
+                "0.0.0.0",
+                "--port",
+                "8008",
+                "--reload"
+            ],
+            "jinja": true, // Полезно для отладки шаблонов, если будете использовать
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "/app"
+                }
+            ]
+        }
+    ]
+}

@@ -32,8 +32,8 @@ class ProxyEarning(Base):
     error_message = Column(Text, nullable=True)
     
     # Временные метки
-    event_timestamp = Column(DateTime, nullable=False)
-    created_at = Column(DateTime, default=func.now(), nullable=False)
+    event_timestamp = Column(DateTime(timezone=True), nullable=False)
+    created_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
     
     # Дополнительные данные (ИСПРАВЛЕНО)
     extra_data = Column(Text, nullable=True)

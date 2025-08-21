@@ -1,11 +1,15 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, func
 from typing import List
+import logging
 
 from app.database import get_db
 from app.models.earnings import ProxyEarning
 from app.schemas.earnings import EarningCreate, EarningResponse
+
+# --- СОЗДАЕМ ЛОГГЕР ---
+logger = logging.getLogger(__name__)
 
 # Создание роутера
 router = APIRouter(prefix="/earnings", tags=["earnings"])
@@ -18,8 +22,22 @@ async def create_earning(
 ):
     """Создание новой записи заработка"""
     try:
-        # Создание новой записи
-        db_earning = ProxyEarning(**earning.dict())
+        # ✅ Отладка - посмотрим что получаем от Pydantic
+        print("=== DEBUG: Received earning object ===")
+        print(f"proxy_key: {earning.proxy_key}")
+        print(f"unique_key: {earning.unique_key}")
+        print(f"All fields: {earning.model_dump()}")
+        
+        # ✅ Используем model_dump() вместо dict()
+        earning_dict = earning.model_dump()
+        
+        # ✅ Дополнительная проверка
+        if not earning_dict.get('proxy_key'):
+            raise HTTPException(status_code=400, detail="proxy_key is required")
+        if not earning_dict.get('unique_key'):
+            raise HTTPException(status_code=400, detail="unique_key is required")
+        
+        db_earning = ProxyEarning(**earning_dict)
         db.add(db_earning)
         await db.commit()
         await db.refresh(db_earning)
@@ -28,6 +46,7 @@ async def create_earning(
     except Exception as e:
         await db.rollback()
         raise HTTPException(status_code=400, detail=f"Error creating earning: {str(e)}")
+
 
 
 @router.get("/", response_model=List[EarningResponse])

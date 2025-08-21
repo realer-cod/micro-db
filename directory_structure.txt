@@ -1,0 +1,68 @@
+Дерево для каталога: d:\Programming\Python\Projects\microservices\global_bd
+d:\Programming\Python\Projects\microservices\global_bd
+├───.devcontainer
+│   └───devcontainer.json
+├───.vscode
+│   ├───launch.json
+│   └───settings.json
+├───alembic
+│   ├───versions
+│   │   ├───0eb8a28fe552_create_proxyearning_table.py
+│   │   ├───72c9bfbbb880_create_proxyearning_table.py
+│   │   ├───934c7a14d452_add_timezone_support_to_datetime_columns.py
+│   │   └───add_currency_rates_simple.py
+│   ├───env.py
+│   ├───README
+│   └───script.py.mako
+├───app
+│   ├───api
+│   │   ├───__init__.py
+│   │   ├───currency.py
+│   │   └───earnings.py
+│   ├───models
+│   │   ├───__init__.py
+│   │   ├───currency.py
+│   │   └───earnings.py
+│   ├───schemas
+│   │   ├───__init__.py
+│   │   ├───currency.py
+│   │   └───earnings.py
+│   ├───__init__.py
+│   ├───config.py
+│   ├───database.py
+│   └───main.py
+├───postgres_data
+│   ├───backups
+│   │   ├───backup_2025-08-21_00-11-26.sql
+│   │   ├───backup_2025-08-21_00-15-29.sql
+│   │   ├───backup_2025-08-21_00-53-53.sql
+│   │   ├───backup_2025-08-21_00-56-22.sql
+│   │   ├───backup_2025-08-21_02-38-42.sql
+│   │   └───backup_2025-08-21_03-09-23.sql
+│   ├───scripts
+│   │   ├───backup_database.ps1
+│   │   ├───check_and_restore.ps1
+│   │   ├───force_restore.ps1
+│   │   ├───get_project_paths.ps1
+│   │   └───startup_system.ps1
+│   └───volume_data
+├───scripts
+├───.env
+├───.env.db
+├───.env.example
+├───alembic.ini
+├───directory_structure.txt
+├───directory_tree_listing.cmd
+├───directory_tree_listing.py
+├───docker-compose.override.yml
+├───docker-compose.yml
+├───Dockerfile
+├───ignore_listing.txt
+├───ignore_tree.txt
+├───llm_context.txt
+├───manual_backup_test.sql
+├───README.md
+├───requirements.txt
+├───start.cmd
+├───stop.bat
+└───разное.txt

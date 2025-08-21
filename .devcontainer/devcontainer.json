@@ -1,0 +1,31 @@
+{
+    "name": "Proxy Stats API Dev",
+    // Указываем, что наша среда разработки определяется файлом docker-compose.yml
+    "dockerComposeFile": "../docker-compose.yml",
+
+    // Указываем, в каком из сервисов docker-compose мы хотим работать
+    "service": "fastapi",
+
+    // Папка, которая будет открыта в VS Code внутри контейнера
+    "workspaceFolder": "/app",
+
+    
+    // Настройки, которые будут применены в VS Code, когда он откроется в контейнере
+    "customizations": {
+        "vscode": {
+            "settings": {
+                // Указываем VS Code путь к Python внутри контейнера
+                "python.defaultInterpreterPath": "/usr/local/bin/python"
+            },
+            // Рекомендуемые расширения для установки ВНУТРЬ контейнера
+            "extensions": [
+                "ms-python.python",
+                "ms-python.debugpy"
+            ]
+        }
+    },
+
+    // Команда, которая выполнится после создания контейнера. 
+    // Полезно, если нужно что-то доустановить. Пока оставим пустой.
+    "postCreateCommand": ""
+}

@@ -1,0 +1,80 @@
+# --- Расширения файлов ---
+
+# Скомпилированный Python
+.pyc
+.pyo
+.pyd
+
+# Логи и временные файлы
+.log
+.tmp
+.swp
+.swo
+.DS_Store
+
+# Бинарные и исполняемые файлы
+.exe
+.dll
+.so
+.o
+.a
+.lib
+.class
+.jar
+
+# Изображения
+.png
+.jpg
+.jpeg
+.gif
+.svg
+.ico
+.bmp
+.tif
+.tiff
+
+# Архивы
+.zip
+.tar
+.gz
+.rar
+.7z
+.bz2
+.tgz
+
+# Базы данных и бэкапы
+.db
+.sqlite
+.sqlite3
+.bak
+
+# --- Конкретные файлы ---
+
+# Lock-файлы (содержат слишком много информации, лучше смотреть на pyproject.toml или requirements.txt)
+poetry.lock
+package-lock.json
+yarn.lock
+
+# Файлы окружения (содержат секреты)
+
+
+# Сам скрипт и его вывод
+directory_tree.py
+output.txt
+llm_context.txt
+
+.gitignore
+directory_structure.txt
+directory_tree_listing.py
+directory_tree_listing.cmd
+ignore_listing.txt
+ignore_tree.txt
+llm_context.txt
+разное.txt
+.sql
+.csv
+.xlsx
+.xls
+.docx
+.doc
+.jsonl
