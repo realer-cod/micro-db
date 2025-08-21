@@ -1,3 +1,5 @@
+
+# старт
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.api import earnings_router, currency_router
